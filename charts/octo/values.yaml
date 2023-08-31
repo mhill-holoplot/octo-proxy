@@ -1,0 +1,29 @@
+image:
+  repository: octo
+  tag: 1.1.0
+  pullPolicy: IfNotPresent
+
+ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+
+replicas: 1
+
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "250m"
+  limits:
+    memory: "128Mi"
+    cpu: "500m"
+
+config: |
+  servers:
+  - name: web-proxy
+    listener:
+      host: 127.0.0.1
+      port: 8080
+    targets:
+      - host: 127.0.0.1
+        port: 80
