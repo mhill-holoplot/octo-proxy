@@ -33,6 +33,8 @@ Flags:
     Specify target backend which traffic will be forwarded
   -metrics
     Specify address and port to run the metrics server
+  -monitor
+	Specify a CNAME record to monitor and reset connections on changes
   -debug
     Enable debug log messages
   -version
@@ -77,6 +79,7 @@ func runMain() error {
 		listener   = flag.String("listener", "127.0.0.1:5000", "Specify listener for running octo-proxy")
 		target     = flag.String("target", "", "Specify comma-separated list of targets for running octo-proxy")
 		metrics    = flag.String("metrics", "0.0.0.0:9123", "Address and port to run the metrics server on")
+		monitor    = flag.String("monitor", "", "Specify a CNAME record to monitor and reset connections on changes")
 		debug      = flag.Bool("debug", false, "Enable debug messages")
 	)
 
@@ -93,7 +96,7 @@ func runMain() error {
 	if *target != "" {
 		targets := strings.Split(*target, ",")
 
-		c, err := config.GenerateConfig(*listener, targets, *metrics)
+		c, err := config.GenerateConfig(*listener, targets, *metrics, *monitor)
 		if err != nil {
 			return err
 		}

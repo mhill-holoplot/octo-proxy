@@ -11,6 +11,7 @@ Octo-proxy or `octo` is simple TCP & TLS Proxy with mutual authentication and tr
 - Support for multiple targets, accessed in random order (load balancer)
 - Reload configuration or certificate without dropping connection
 - Expose metrics that can be consumed by prometheus
+- Monitor CNAME records to force reconnection achieving DNS failover with long lived connections
 
 ### Usage
 #### Run octo with ad-hoc command

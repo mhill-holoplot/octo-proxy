@@ -114,6 +114,7 @@ func TestGenerateConfig(t *testing.T) {
 		Listener       string
 		Targets        []string
 		Metrics        string
+		Monitor        string
 		expectedConfig *Config
 		expectedError  string
 	}{
@@ -122,6 +123,7 @@ func TestGenerateConfig(t *testing.T) {
 			Listener: "127.0.0.1:8080",
 			Targets:  []string{"127.0.0.1:80"},
 			Metrics:  "127.0.0.1:9123",
+			Monitor:  "octo.example.com",
 			expectedConfig: &Config{
 				ServerConfigs: []ServerConfig{
 					{
@@ -142,6 +144,7 @@ func TestGenerateConfig(t *testing.T) {
 								},
 							},
 						},
+						Monitor: "octo.example.com",
 					},
 				},
 				MetricsConfig: HostConfig{
@@ -212,7 +215,7 @@ func TestGenerateConfig(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.Name, func(t *testing.T) {
-			c, err := GenerateConfig(tt.Listener, tt.Targets, tt.Metrics)
+			c, err := GenerateConfig(tt.Listener, tt.Targets, tt.Metrics, tt.Monitor)
 			if err != nil {
 				if !strings.Contains(err.Error(), tt.expectedError) {
 					t.Fatalf("got %v, want %s", err, tt.expectedError)

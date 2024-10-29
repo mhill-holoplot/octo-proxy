@@ -27,7 +27,7 @@ func TestProxy(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// start octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -65,7 +65,7 @@ func TestProxyWithMultipleTargets(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// start octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{"localhost:9001", backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{"localhost:9001", backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -104,7 +104,7 @@ func TestProxyWithMirror(t *testing.T) {
 	mirror := testhelper.RunTestServer(&wg, mirrorResult)
 
 	// prepare octo proxy configuration
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -159,7 +159,7 @@ func TestProxyWithSimpleTLS(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -211,7 +211,7 @@ func TestProxyWithMutualTLS(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -267,7 +267,7 @@ func TestProxyWithMutualTLSWithConfiguredSNI(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -320,7 +320,7 @@ func TestProxyWithMutualTLSWithConfiguredCRLWithRevokedClientCert(t *testing.T) 
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -373,7 +373,7 @@ func TestProxyWithMutualTLSWithConfiguredCRLWithRevokedServerCert(t *testing.T) 
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -426,7 +426,7 @@ func TestProxyMutualTLSWhenClientUsingInvalidCertificate(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -478,7 +478,7 @@ func TestProxyMutualTLSWhenClientNotProvideCA(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -530,7 +530,7 @@ func TestProxyMutualTLSWhenClientUseWrongCA(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -588,7 +588,7 @@ func TestProxyWithTargetSimpleTLS(t *testing.T) {
 	backend := RunTestTLSServer(&wg, tC, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -644,7 +644,7 @@ func TestProxyWithTargetMutualTLS(t *testing.T) {
 	backend := RunTestTLSServer(&wg, tC, result)
 
 	// prepare configuration for octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -687,7 +687,7 @@ func TestProxyWithTargetMutualTLS(t *testing.T) {
 
 func TestUnreachableTarget(t *testing.T) {
 	// start octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{"127.0.0.1:10"}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{"127.0.0.1:10"}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -729,7 +729,7 @@ func TestUnreachableMirror(t *testing.T) {
 	backend := testhelper.RunTestServer(&wg, result)
 
 	// prepare octo proxy configuration
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -773,7 +773,7 @@ func TestProxyConcurrent(t *testing.T) {
 	backend := testhelper.RunTestServerWithResponse(&wg, connCount)
 
 	// start octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -822,7 +822,7 @@ func TestProxyWithSlowTarget(t *testing.T) {
 	backend := testhelper.RunTestServerSlowMode(&wg, 1)
 
 	// start octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -884,7 +884,7 @@ func TestProxyWithZeroTimeout(t *testing.T) {
 	backend := testhelper.RunTestServerSlowMode(&wg, 1)
 
 	// start octo proxy
-	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "")
+	cfg, err := config.GenerateConfig("127.0.0.1:9000", []string{backend}, "", "")
 	if err != nil {
 		t.Fatal(err)
 	}

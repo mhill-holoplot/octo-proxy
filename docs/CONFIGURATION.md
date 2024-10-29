@@ -13,6 +13,7 @@
 | listener | [`Hostconfig`](#hostconfig) | Set of listener related configuration. All of the incoming request to octo-proxy will be handled by this listener.            | yes      |
 | targets  | [`Hostconfig[]`](#hostconfig) | Set of target related configurations. These targets are backends which octo-proxy will forward all incoming traffic accepted by the listener.            | yes      |
 | mirror   | [`Hostconfig`](#hostconfig)  | Set of mirror related configuration. If this configuration is enabled, all incoming requests will also be forwarded to this mirror. Unlike the `target`, in a `mirror` setup, we implement 'fire and forget,' where every request is only forwarded, and the response is ignored.          | no       |
+| monitor | `<string>` | A CNAME to monitor for changes. When the CNAME changes the connections are closed forcing reconnection. When unset the monitoring feature is disabled. | no |
 
 ## Hostconfig
 | Field     | Type          | Description                     | Required |

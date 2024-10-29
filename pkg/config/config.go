@@ -33,6 +33,7 @@ type ServerConfig struct {
 	Listener HostConfig   `yaml:"listener"`
 	Targets  []HostConfig `yaml:"targets"`
 	Mirror   HostConfig   `yaml:"mirror"`
+	Monitor  string       `yaml:"monitor"`
 }
 
 type HostConfig struct {
@@ -115,7 +116,7 @@ func readConfig(r io.Reader) (*Config, error) {
 	return config, nil
 }
 
-func GenerateConfig(listener string, targets []string, metrics string) (*Config, error) {
+func GenerateConfig(listener string, targets []string, metrics string, monitor string) (*Config, error) {
 	l := strings.Split(listener, ":")
 
 	if len(l) != 2 {
@@ -131,6 +132,7 @@ func GenerateConfig(listener string, targets []string, metrics string) (*Config,
 					Port: l[1],
 				},
 				Targets: []HostConfig{},
+				Monitor: monitor,
 			},
 		},
 	}

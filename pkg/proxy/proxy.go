@@ -127,10 +127,26 @@ func (p *Proxy) handleConn(ctx context.Context, c config.ServerConfig) {
 			continue
 		}
 
+		connectionCtx, connectionCancel := context.WithCancel(ctx)
+		if c.Monitor != "" {
+			p.Wg.Add(1)
+			go func() {
+				monitor := NewMonitor(goNetResolver{}, c.Monitor, 5*time.Second)
+				monitor.Run(connectionCtx, func() {
+					log.Info().Msg("CNAME changed, closing connection")
+					if err := srcConn.Close(); err != nil {
+						log.Error().Err(err).Msg("error closing connection")
+					}
+				})
+				p.Wg.Done()
+			}()
+		}
+
 		p.Wg.Add(1)
 		go func() {
 			p.forwardConn(ctx, c, srcConn)
 			p.Wg.Done()
+			connectionCancel()
 			downstreamConnActive.With(prometheus.Labels{"name": p.Name}).Dec()
 		}()
 	}
